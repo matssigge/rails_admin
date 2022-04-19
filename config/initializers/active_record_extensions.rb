@@ -22,4 +22,12 @@ ActiveSupport.on_load(:active_record) do
       end
     end
   end
+
+  if defined?(CompositePrimaryKeys)
+    CompositePrimaryKeys::CompositeKeys.class_eval do
+      def to_param
+        to_s
+      end
+    end
+  end
 end

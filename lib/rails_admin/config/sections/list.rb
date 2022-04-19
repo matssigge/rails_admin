@@ -31,7 +31,7 @@ module RailsAdmin
         end
 
         register_instance_option :sort_by do
-          parent.abstract_model.primary_key
+          Array(parent.abstract_model.primary_key).first
         end
 
         register_instance_option :scopes do

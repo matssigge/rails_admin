@@ -29,16 +29,28 @@ module RailsAdmin
             true
           end
 
+          register_instance_option :allowed_methods do
+            Array(association.foreign_key)
+          end
+
           def associated_primary_key
             association.primary_key
           end
 
           def selected_id
-            bindings[:object].send(association.key_accessor)
+            if association.klass.try(:composite?)
+              value&.id.to_s
+            else
+              bindings[:object].send(association.key_accessor)
+            end
           end
 
           def method_name
-            nested_form ? "#{name}_attributes".to_sym : super
+            if association.klass.try(:composite?)
+              :"#{name}_id"
+            else
+              nested_form ? "#{name}_attributes".to_sym : super
+            end
           end
 
           def multiple?

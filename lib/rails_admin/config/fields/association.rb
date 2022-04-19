@@ -123,6 +123,14 @@ module RailsAdmin
         def associated_model_limit
           RailsAdmin.config.default_associated_collection_limit
         end
+
+        def parse_input(params)
+          if params[method_name].present? && association.klass.composite? && !nested_form
+            Array(association.foreign_key).zip(CompositePrimaryKeys::CompositeKeys.parse(params.delete(method_name))).each do |key, value|
+              params[key] = value
+            end
+          end
+        end
       end
     end
   end

@@ -15,7 +15,7 @@ module RailsAdmin
       end
 
       def get(id, scope = scoped)
-        object = scope.where(primary_key => id).first
+        object = scope.find(id) rescue nil
         return unless object
 
         object.extend(ObjectExtension)

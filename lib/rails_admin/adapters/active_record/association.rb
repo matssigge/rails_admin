@@ -38,12 +38,20 @@ module RailsAdmin
           when :has_one
             association.klass.primary_key
           else
-            association.association_primary_key
+            if klass.composite?
+              :id
+            else
+              association.association_primary_key
+            end
           end.try(:to_sym)
         end
 
         def foreign_key
-          association.foreign_key.to_sym
+          if association.foreign_key.is_a? Array
+            association.foreign_key.map(&:to_sym)
+          else
+            association.foreign_key.to_sym
+          end
         end
 
         def foreign_key_nullable?
