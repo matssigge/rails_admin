@@ -11,7 +11,7 @@
 
 /*** Font-awesome ***/
 
-$fa-font-path: "~@fortawesome/fontawesome-free/webfonts" !default;
+$fa-font-path: "@fortawesome/fontawesome-free/webfonts" !default;
 @import "@fortawesome/fontawesome-free/scss/solid";
 @import "@fortawesome/fontawesome-free/scss/fontawesome";
 
